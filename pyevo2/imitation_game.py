@@ -30,7 +30,66 @@ class ImitationGame:
         Runs the dynamics for a single round, updating which position on the
         board belongs to which agent.
         """
-        pass
+        # Pass 1: compute average payoffs
+        for x in range(30):
+            for y in range(30):
+                self._average_payoffs(x, y)
+
+        # Pass 2: Determine which strategy will become next round
+        for x in range(30):
+            for y in range(30):
+                self._best_neighbor(x, y)
+
+        # Pass 3: Switch to new strategy
+        for x in range(30):
+            for y in range(30):
+                self._update_strategy(x, y)
+
+    def _average_payoffs(self, x, y):
+        """
+        Computes and stores (in the agent) the average payoff received by
+        the agent at (x, y) by playing each of its neighbors.
+        """
+        agent = self.board.at(x, y)
+
+        tot_payoff = 0
+        count_neighbors = 0
+        for d in self.board.dirs:
+            ex, ey = self.board.get_coord_at_dir(x, y, d)
+            if ex is None or ey is None:
+                continue
+            enemy = self.board.at(ex, ey)
+
+            # enemy indexed first (selects column with enemy name), then
+            # agent (selects row with agent name), as per the payoffs def.
+            tot_payoff += self.payoffs[enemy.name][agent.name]
+            count_neighbors += 1
+        agent.curr_payoff = tot_payoff / float(count_neighbors)
+
+    def _best_neighbor(self, x, y):
+        """
+        The agent at x, y looks at its own current payoff and the payoff of
+        all neighbors to determine which strategy it will switch to.
+        """
+        agent = self.board.at(x, y)
+
+        best_payoff = agent.curr_payoff
+        best_strat = agent.name
+        for d in self.board.dirs:
+            ex, ey = self.board.get_coord_at_dir(x, y, d)
+            if ex is None or ey is None:
+                continue
+            enemy = self.board.at(ex, ey)
+            e_payoff = enemy.curr_payoff
+            if e_payoff > best_payoff:
+                # Only switch if strictly greater
+                best_payoff = e_payoff
+                best_strat = enemy.name
+        agent.next_strat = self.board.init_agent(best_strat)
+
+    def _update_strategy(self, x, y):
+        agent = self.board.at(x, y)
+        self.board.set_agent(x, y, agent.next_strat)
 
     def run(self, t, interval=1, fps=2):
         """

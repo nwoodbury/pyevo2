@@ -30,6 +30,8 @@ class Board:
         constructor for all board subclasses.
     """
 
+    dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
+
     def set_agent(self, x, y, agent):
         """
         Sets the agent at (x, y) to agent.
@@ -89,3 +91,36 @@ class Board:
         """
         return self.agent_defs[name]['class'](
             self.agent_defs[name]['color'], name)
+
+    def get_coord_at_dir(self, x, y, dir):
+        """
+        Gets the coordinates of the point at dir from (x, y).
+        N is +y, E is +x/
+
+        For example, if x = 5, y = 10, dir = NE, returns (6, 11).
+
+        If either x or y leaves the board, returns None in its place.
+
+        Parameters
+        ----------
+        x : int [0, 30)
+        y : int [0, 30)
+        dir : str in {'N', 'NE', 'E', etc.}
+
+        Returns
+        -------
+        x : int [0, 30) or None
+        y : int [0, 30) or None
+        """
+        if 'N' in dir:
+            y += 1
+        if 'S' in dir:
+            y -= 1
+        if 'E' in dir:
+            x += 1
+        if 'W' in dir:
+            x -= 1
+
+        if x < 0 or x >= 30 or y < 0 or y >= 30:
+            return None, None
+        return x, y
