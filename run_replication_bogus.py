@@ -13,7 +13,7 @@ if __name__ == '__main__':
             'color': 'b',
             'number': 225
         },
-        'Not-Tit-For-Tat': {
+        'Not-Tit-for-Tat': {
             'class': NotTitForTatAgent,
             'color': 'm',
             'number': 225
@@ -35,4 +35,4 @@ if __name__ == '__main__':
     payoffs = load_payoffs('bogus', 0.99)
 
     game = ReplicationGame(pop, payoffs, 'replication_bogus_01')
-    game.run(20, fps=1)
+    game.run(20, fps=0.5)
