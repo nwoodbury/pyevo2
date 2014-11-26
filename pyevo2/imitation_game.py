@@ -88,6 +88,9 @@ class ImitationGame:
         agent.next_strat = self.board.init_agent(best_strat)
 
     def _update_strategy(self, x, y):
+        """
+        Updates the strategy at x, y to the best neighbor strategy.
+        """
         agent = self.board.at(x, y)
         self.board.set_agent(x, y, agent.next_strat)
 
