@@ -105,3 +105,4 @@ class ReplicationGame:
                                       interval=interval, repeat=False)
         writer = animation.FFMpegWriter()
         ani.save(filename='%s/animation.mp4' % loc, fps=fps, writer=writer)
+	plt.close(fig)
