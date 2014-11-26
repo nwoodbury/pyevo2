@@ -1,0 +1,5 @@
+,Always Cooperate,Always Defect,Tit-for-Tat,Not-Tit-for-Tat
+Always Cooperate,80,30,50,20
+Always Defect,90,20,10,20
+Tit-for-Tat,100,50,80,50
+Not-Tit-for-Tat,60,30,80,20
