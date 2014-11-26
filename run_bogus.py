@@ -1,5 +1,5 @@
 # !!! DIFFERENCE: pyevo -> pyevo2 !!!
-
+from pyevo2.quad_board import QuadBoard
 from pyevo2.agents import (TitForTatAgent, NotTitForTatAgent,
                            AlwaysCooperateAgent, AlwaysDefectAgent)
 # !!! DIFFERENCE: import load_payoffs function instead of matrix !!!
@@ -18,6 +18,9 @@ if __name__ == '__main__':
         {'name': 'Always Defect', 'class': AlwaysDefectAgent,
          'color': 'r'}   # SE
     ]
+
+    # Initialize the board
+    board = QuadBoard(quads)
 
     # !!! DIFFERENCE: payoff loading method is different
     payoffs = load_payoffs('bogus', 0.99)
